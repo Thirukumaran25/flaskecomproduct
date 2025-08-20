@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Shopping Cart</h2>
+    {% if cart_items %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>₹{{ "%.2f"|format(item.product.price) }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ "%.2f"|format(item.product.price * item.quantity) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                    <td><strong>₹{{ "%.2f"|format(total_price) }}</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        <a href="#" class="btn btn-primary float-end">Proceed to Checkout</a>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Your cart is empty.
+        </div>
+    {% endif %}
+{% endblock %}
